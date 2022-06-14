@@ -2,6 +2,8 @@
 
 ## About Me
 
+This is a paragraph about me!
+
 ## The Premise
 
 ## Tools used
