@@ -5,7 +5,7 @@ module.exports = async function (context, req) {
 
     const code = "letmein";
     const output = (password == code) ? "Access granted." : "Access denied.";
-    
+
     context.res = {
         // status: 200, /* Defaults to 200 */
         body: output
