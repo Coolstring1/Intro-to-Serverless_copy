@@ -10,12 +10,17 @@ module.exports = async function (context, req) {
 
     const parts = multipart.Parse(body,boundary);
 
+    
+
     //analyze the image
     const result = await analyzeImage(parts[0].data);
+
+    let emotions = result[0].faceAttributes.emotion;
+    let objects = Object.values(emotions);
+    const main_emotion = Object.keys(emotions).find(key => emotions[key] === Math.max(...objects));
+
     context.res = {
-        body: {
-            result
-        }
+        body: main_emotion
     };
     console.log(result)
     context.done();
@@ -23,7 +28,9 @@ module.exports = async function (context, req) {
 
 async function analyzeImage(img) {
     const subscriptionKey = process.env.SUBSCRIPTIONKEY;
+    //const subscriptionKey = '72e80e361b2c424b953c7088066736f8';
     const uriBase = process.env.ENDPOINT + '/face/v1.0/detect';
+    //const uriBase = 'https://face-coolstring1.cognitiveservices.azure.com/' + '/face/v1.0/detect';
 
     let params = new URLSearchParams({
         'returnFaceId': 'true',
